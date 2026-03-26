@@ -9,6 +9,8 @@ const envConfig = readEnvFile([
   'ASSISTANT_NAME',
   'ASSISTANT_HAS_OWN_NUMBER',
   'TZ',
+  'CREDENTIAL_PROXY_PORT',
+  'ANTHROPIC_MODEL',
 ]);
 
 export const ASSISTANT_NAME =
@@ -51,7 +53,9 @@ export const CONTAINER_MAX_OUTPUT_SIZE = parseInt(
   10,
 ); // 10MB default
 export const CREDENTIAL_PROXY_PORT = parseInt(
-  process.env.CREDENTIAL_PROXY_PORT || '3001',
+  envConfig.CREDENTIAL_PROXY_PORT ||
+    process.env.CREDENTIAL_PROXY_PORT ||
+    '3001',
   10,
 );
 export const IPC_POLL_INTERVAL = 1000;
@@ -92,3 +96,6 @@ function resolveConfigTimezone(): string {
   return 'UTC';
 }
 export const TIMEZONE = resolveConfigTimezone();
+
+export const ANTHROPIC_MODEL =
+  envConfig.ANTHROPIC_MODEL || process.env.ANTHROPIC_MODEL || 'claude-2';
